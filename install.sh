@@ -8,6 +8,7 @@ CreateBaseFolders(){
     mkdir ~/.local/share
     mkdir ~/.local/share/ArtexDesktopApps
     mkdir ~/.local/share/ArtexDesktopApps/Data
+    mkdir ~/.config/ArtexDesktop
 }
 
 CreateBaseFiles(){
@@ -17,3 +18,8 @@ CreateBaseFiles(){
 
 CreateBaseFolders
 CreateBaseFiles
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install PyQt6
