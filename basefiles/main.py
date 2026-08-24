@@ -1,11 +1,11 @@
 class ThemeManager:
     """Gerenciador de temas para o ecossistema ArtexDesktop."""
 
-    THEME_FILE = Path.home() / ".config" / "theme_mode"
+    THEME_FILE = UserHome / ".config" / "theme_mode"
     SIGNAL_FILE = Path("/tmp/desktop_theme.signal")
     
-    KITTY_CONF = Path.home() / ".config" / "kitty" / "kitty.conf"
-    FOOT_CONF = Path.home() / ".config" / "foot" / "foot.ini"
+    KITTY_CONF = UserHome / ".config" / "kitty" / "kitty.conf"
+    FOOT_CONF = UserHome / ".config" / "foot" / "foot.ini"
     XFCE_CHANNEL = "xsettings"
 
     @classmethod
@@ -32,8 +32,8 @@ class ThemeManager:
         if not cls.FOOT_CONF.exists():
             return
         theme_file = "dark-theme.ini" if is_dark else "light-theme.ini"
-        foot_theme_link = Path.home() / ".config" / "foot" / "current_theme.ini"
-        target_theme = Path.home() / ".config" / "foot" / theme_file
+        foot_theme_link = UserHome / ".config" / "foot" / "current_theme.ini"
+        target_theme = UserHome / ".config" / "foot" / theme_file
 
         if target_theme.exists():
             if foot_theme_link.is_symlink() or foot_theme_link.exists():
@@ -115,3 +115,12 @@ class ThemeManager:
         current = cls.read_current_theme()
         new_theme = "light" if current == "dark" else "dark"
         cls.apply_theme(new_theme)
+
+class Boot: #when the system starts, it will check if the theme is set and apply it
+    def __init__(self):
+        self.apply_theme_on_boot()
+
+    def apply_theme_on_boot(self):
+        """Aplica o tema salvo no boot do sistema."""
+        current_theme = ThemeManager.read_current_theme()
+        ThemeManager.apply_theme(current_theme)
