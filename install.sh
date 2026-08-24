@@ -21,8 +21,13 @@ CreateBaseFolders
 echo -e "${green} Create Files"
 CreateBaseFiles
 
-python3 -m venv .venv
-source .venv/bin/activate
 echo -e "${green} Install python dependecies"
+
+python3 -m venv .venv
+source .venv/bin/activate || source .venv/bin/activate.fish 
 pip install --upgrade pip
 pip install PyQt6
+
+python3 ~/ArtexDesktopApps/ArtexAppsConnectConfig.py
+
+deactivate
