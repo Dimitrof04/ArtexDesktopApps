@@ -3,17 +3,18 @@ echo -e "${BLUE}         Welcome to ArtexApps!         ${NC}"
 echo -e "${BLUE}=======================================${NC}"
 
 CreateBaseFolders(){
-    mkdir ~/.config/ArtexDesktop
     mkdir ~/.local/temp
     mkdir ~/.local/share
     mkdir ~/.local/share/ArtexDesktopApps
     mkdir ~/.local/share/ArtexDesktopApps/Data
     mkdir ~/.config/ArtexDesktop
+    mkdir ~/.config/ArtexDesktop/Files
 }
 
+cd ~/ArtexDesktopApps
+
 CreateBaseFiles(){
-    cp basefiles/ArtexDesktopTheme ~/.config/ArtexDesktop
-    cp basefiles/ArtexDesktopApps.conf ~/.config/ArtexDesktop
+    cp basefiles/artexconfig.py ~/.config/ArtexDesktop/artexconfig.py
 }
 
 echo -e "${green} Create Folders"
@@ -23,11 +24,18 @@ CreateBaseFiles
 
 echo -e "${green} Install python dependecies"
 
+cd ~
+
 python3 -m venv .venv
-source .venv/bin/activate || source .venv/bin/activate.fish 
+source .venv/bin/activate
 pip install --upgrade pip
 pip install PyQt6
+
+cd ~/ArtexDesktopApps
 
 python3 ~/ArtexDesktopApps/ArtexAppsConnectConfig.py
 
 deactivate
+
+echo -e "${blue} Completed Install"
+

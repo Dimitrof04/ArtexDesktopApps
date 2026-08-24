@@ -1,6 +1,6 @@
 import os
 
-ConfigPath = os.path.expanduser("~/.config/ArtexDesktop/ArtexConfig.py")
+ConfigPath = os.path.expanduser("~/.config/ArtexDesktop/artex.py")
 
 HEADER_COMMENT = (
     "# ArtexDesktop library for ArtexConfig | thanks for use :3\n\n"
@@ -19,8 +19,8 @@ def ReadFileContent(file_path: str) -> str:
         return f.read()
 
 def WriteOrUpdateBlock(app_identifier: str, block_content: str, path: str = ConfigPath):
-    block_header = f"### {app_identifier}\n"
-    block_footer = "#### ---\n"
+    block_header = f"### {app_identifier}\n\n"
+    block_footer = "\n#### ---\n"
     
     # Formata o novo bloco completo
     new_block_lines = [
