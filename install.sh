@@ -1,5 +1,5 @@
 echo -e "${BLUE}=======================================${NC}"
-echo -e "${BLUE}            Welcome to Apps!           ${NC}"
+echo -e "${BLUE}         Welcome to ArtexApps!         ${NC}"
 echo -e "${BLUE}=======================================${NC}"
 
 CreateBaseFolders(){
@@ -16,10 +16,13 @@ CreateBaseFiles(){
     cp basefiles/ArtexDesktopApps.conf ~/.config/ArtexDesktop
 }
 
+echo -e "${green} Create Folders"
 CreateBaseFolders
+echo -e "${green} Create Files"
 CreateBaseFiles
 
 python3 -m venv .venv
 source .venv/bin/activate
+echo -e "${green} Install python dependecies"
 pip install --upgrade pip
 pip install PyQt6
