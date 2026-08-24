@@ -89,3 +89,10 @@ if __name__ == "__main__":
     imports_content = ReadFileContent(ImportsPath)
     main_content = ReadFileContent(MainPath)
     artex_content = ReadFileContent(ArtexDesktopAppsPath)
+
+    if imports_content:
+        WriteOrUpdateBlock("imports", imports_content, ConfigPath)
+    if main_content:
+        WriteOrUpdateBlock("main", main_content, ConfigPath)    
+    if artex_content:
+        WriteOrUpdateBlock("ArtexDesktopApps", artex_content, ConfigPath)

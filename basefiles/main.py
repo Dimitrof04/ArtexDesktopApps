@@ -124,3 +124,10 @@ class Boot: #when the system starts, it will check if the theme is set and apply
         """Aplica o tema salvo no boot do sistema."""
         current_theme = ThemeManager.read_current_theme()
         ThemeManager.apply_theme(current_theme)
+
+    def RunCommand(self, command: list):
+        # Run Command
+        try:
+            subprocess.run([command])
+        except subprocess.CalledProcessError as e:
+            print(f"[ArtexDesktop] Erro ao executar o comando: {e}")
