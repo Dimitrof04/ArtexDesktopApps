@@ -89,13 +89,3 @@ if __name__ == "__main__":
     imports_content = ReadFileContent(ImportsPath)
     main_content = ReadFileContent(MainPath)
     artex_content = ReadFileContent(ArtexDesktopAppsPath)
-
-    # Escreve o conteúdo lido dentro dos respectivos blocos
-    if imports_content:
-        WriteOrUpdateBlock("imports", imports_content)
-        
-    if main_content:
-        WriteOrUpdateBlock("main", main_content)
-        
-    if artex_content:
-        WriteOrUpdateBlock("ArtexDesktopApps", artex_content)
