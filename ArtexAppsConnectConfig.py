@@ -1,5 +1,7 @@
 import os
 
+Home = os.path.expanduser("~/ArtexDesktopApps")
+
 ConfigPath = os.path.expanduser("~/.config/ArtexDesktop/artex.py")
 
 HEADER_COMMENT = (
@@ -81,14 +83,16 @@ def WriteOrUpdateBlock(app_identifier: str, block_content: str, path: str = Conf
 
 if __name__ == "__main__":
     # Caminhos para os seus arquivos
-    ImportsPath = "basefiles/imports.py"
-    MainPath = "basefiles/main.py"
-    ArtexDesktopAppsPath = "basefiles/ArtexDesktopApps.py"
+    ImportsPath = f"{Home}/basefiles/imports.py"
+    MainPath = f"{Home}/basefiles/main.py"
+    ArtexDesktopAppsPath = f"{Home}/basefiles/ArtexDesktopApps.py"
+    Hyprland = f"{Home}/basefiles/Hyprland.py"
 
     # Lê o CONTEÚDO REAL de dentro de cada arquivo
     imports_content = ReadFileContent(ImportsPath)
     main_content = ReadFileContent(MainPath)
     artex_content = ReadFileContent(ArtexDesktopAppsPath)
+    hyprland = ReadFileContent(Hyprland)
 
     if imports_content:
         WriteOrUpdateBlock("imports", imports_content, ConfigPath)
@@ -96,3 +100,5 @@ if __name__ == "__main__":
         WriteOrUpdateBlock("main", main_content, ConfigPath)    
     if artex_content:
         WriteOrUpdateBlock("ArtexDesktopApps", artex_content, ConfigPath)
+    if hyprland:
+        WriteOrUpdateBlock("Hyprland", hyprland)

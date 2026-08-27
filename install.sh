@@ -1,9 +1,10 @@
+#!/bin/bash
+
 echo -e "${BLUE}=======================================${NC}"
 echo -e "${BLUE}         Welcome to ArtexApps!         ${NC}"
 echo -e "${BLUE}=======================================${NC}"
 
 CreateBaseFolders(){
-    mkdir ~/.local/temp
     mkdir ~/.local/share
     mkdir ~/.local/share/ArtexDesktopApps
     mkdir ~/.local/share/ArtexDesktopApps/Data
@@ -31,11 +32,8 @@ source .venv/bin/activate
 pip install --upgrade pip
 pip install PyQt6
 
-cd ~/ArtexDesktopApps
-
 python3 ~/ArtexDesktopApps/ArtexAppsConnectConfig.py
 
 deactivate
 
 echo -e "${blue} Completed Install"
-
