@@ -131,3 +131,78 @@ class Boot: #when the system starts, it will check if the theme is set and apply
             subprocess.run([command])
         except subprocess.CalledProcessError as e:
             print(f"[ArtexDesktop] Erro ao executar o comando: {e}")
+
+class DataManager:
+    def __init__(self):
+        # Garante que os diretórios principais existam
+        os.makedirs(BASE_FILES_DIR, exist_ok=True)
+
+    def main(self, key: str, mode: str, value: str = None, UnicaFile: bool = True):
+        if mode == "r":
+            return self.readFile(key, UnicaFile)
+        elif mode == "w":
+            return self.WriteFile(key, value, UnicaFile)
+
+    def readFile(self, key: str, UnicaFile: bool = True) -> str:
+        # Modo 1: Arquivo Individual (Pasta basefiles)
+        if UnicaFile:
+            file_path = os.path.join(BASE_FILES_DIR, key)
+            if os.path.exists(file_path):
+                with open(file_path, "r", encoding="utf-8") as f:
+                    return f.read().strip()
+            return ""
+
+        # Modo 2: Arquivo Global (ArtexConfig.conf)
+        else:
+            if not os.path.exists(GLOBAL_CONF_FILE):
+                return ""
+
+            with open(GLOBAL_CONF_FILE, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+
+            for line in lines:
+                if "=" in line:
+                    k, v = line.strip().split("=", 1)
+                    if k.strip() == key:
+                        return v.strip()
+            return ""
+
+    def WriteFile(self, key: str, value: str, UnicaFile: bool = True):
+        current_val = self.readFile(key, UnicaFile)
+
+        # Se o valor já for exatamente o mesmo, encerra sem sobrescrever
+        if current_val == str(value):
+            return
+
+        # Escreve em Arquivo Individual (ex: CurrentTheme contendo apenas "dark")
+        if UnicaFile:
+            file_path = os.path.join(BASE_FILES_DIR, key)
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(str(value))
+            print(f"[DataManager] Arquivo individual '{key}' atualizado.")
+
+        # Escreve/Atualiza no ArtexConfig.conf no formato chave=valor
+        else:
+            lines = []
+            key_found = False
+
+            if os.path.exists(GLOBAL_CONF_FILE):
+                with open(GLOBAL_CONF_FILE, "r", encoding="utf-8") as f:
+                    lines = f.readlines()
+
+            new_lines = []
+            for line in lines:
+                if "=" in line:
+                    k, _ = line.strip().split("=", 1)
+                    if k.strip() == key:
+                        new_lines.append(f"{key}={value}\n")
+                        key_found = True
+                        continue
+                new_lines.append(line)
+
+            if not key_found:
+                new_lines.append(f"{key}={value}\n")
+
+            with open(GLOBAL_CONF_FILE, "w", encoding="utf-8") as f:
+                f.writelines(new_lines)
+            print(f"[DataManager] Chave '{key}' atualizada no ArtexConfig.conf.")
